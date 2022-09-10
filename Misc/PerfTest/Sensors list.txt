@@ -1,0 +1,6 @@
+﻿
+
+Open Hardware Monitor
+	
+	CPU
+		CPU Package temp
