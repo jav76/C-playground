@@ -1,9 +1,11 @@
 ﻿<Window x:Class="PerfWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:controls="clr-namespace:PerfWPF.Views"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerfWPF"
+        xmlns:views="clr-namespace:PerfWPF.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="180" Width="2560"
         AllowsTransparency="True"  WindowStyle="None" Topmost="True"
@@ -16,6 +18,9 @@
             <TextBox x:Name="GPU_Clock" HorizontalAlignment="Left" Margin="10,33,0,0" TextWrapping="Wrap" Text="GPU Clock:" VerticalAlignment="Top" Width="168"/>
             <TextBox x:Name="CPUClockVal" HorizontalAlignment="Left" Margin="183,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Sensors.CPUClock, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#.##}}"/>
             <TextBox x:Name="GPUClockVal" HorizontalAlignment="Left" Margin="183,33,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <controls:CPUChart RenderTransformOrigin="0.499,0.517">
+                
+            </controls:CPUChart>
         </Grid>
 
     </Grid>

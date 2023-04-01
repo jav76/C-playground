@@ -5,14 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.Collections;
 
-namespace PerfWPF.Model
+namespace PerfWPF.Models
 {
     public class SensorsModel : INotifyPropertyChanged
     {
         public SensorsModel()
         {
+
         }
+
 
         private float _CPUClock;
 
@@ -23,6 +27,11 @@ namespace PerfWPF.Model
                 _CPUClock = value;
                 OnPropertyChanged(nameof(CPUClock));
             }
+        }
+
+        public void updateCPUChart(float newVal)
+        {
+
         }
 
         #region INotifyPropertyChanged Members

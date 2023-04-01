@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="PerfWPF.Views.CPUChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:lvcore="clr-namespace:LiveChartsCore;assembly=LiveChartsCore"
+             xmlns:vms="clr-namespace:PerfWPF.ViewModels"
+             MaxWidth="300"
+             MaxHeight="300">
+    <UserControl.DataContext>
+        <vms:CPUViewModel/>
+    </UserControl.DataContext>
+    <lvc:PieChart
+        Series="{Binding CPUModel.Series}"
+        InitialRotation="-225"
+        MaxAngle="270"
+        Total="6000"
+        
+        EasingFunction="{Binding Source={x:Static lvcore:EasingFunctions.BounceOut}}"
+        >
+    </lvc:PieChart>
+</UserControl>

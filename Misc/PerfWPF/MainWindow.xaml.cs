@@ -14,8 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
-using PerfWPF.ViewModel;
-using PerfWPF.Model;
+using PerfWPF.ViewModels;
+using PerfWPF.Models;
 
 namespace PerfWPF
 {

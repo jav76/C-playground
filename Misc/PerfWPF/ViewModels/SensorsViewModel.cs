@@ -9,9 +9,9 @@ using System.Threading;
 using System.Diagnostics;
 using System.Windows.Input;
 
-using PerfWPF.Model;
+using PerfWPF.Models;
 
-namespace PerfWPF.ViewModel
+namespace PerfWPF.ViewModels
 {
     internal class SensorsViewModel :IDisposable
     {
@@ -26,7 +26,15 @@ namespace PerfWPF.ViewModel
 
         private SensorsModel _Sensors;
 
-        public SensorsModel Sensors { 
+        private CPUViewModel _CPUVM;
+
+        public CPUViewModel CPUVM
+        {
+            get { return _CPUVM; }
+        }
+
+        public SensorsModel Sensors
+        { 
             get { return _Sensors; }
         }
 
@@ -34,6 +42,8 @@ namespace PerfWPF.ViewModel
         public SensorsViewModel()
         {
             _Sensors = new SensorsModel();
+
+            _CPUVM = new CPUViewModel();
 
             _computer = new Computer()
             {
@@ -90,6 +100,7 @@ namespace PerfWPF.ViewModel
                         Debug.WriteLine(sensor.Name);
                         Debug.WriteLine(sensor.Value);
                         _Sensors.CPUClock = sensor.Value.HasValue ? sensor.Value.Value : 0;
+                        _CPUVM.CPUModel.UpdateFreq(sensor.Value.HasValue ? sensor.Value.Value : 0);
                         break;
                     }
                 }
