@@ -24,9 +24,6 @@ namespace PerfWPF.Models
             _frequency = new ObservableValue(500);
             _series = new GaugeBuilder().WithInnerRadius(50).AddValue(_frequency).BuildSeries();
 
-
-
-
         }
         private IEnumerable<ISeries> _series { get; set; }
         public IEnumerable<ISeries> Series { get { return _series; } }
@@ -34,11 +31,7 @@ namespace PerfWPF.Models
 
         private ObservableValue _frequency;
 
-        public double Frequency { set
-            {
-                _frequency.Value = value;
-            }
-        }
+        public double Frequency { set => _frequency.Value = value; }
 
 
         public void UpdateFreq(double newFreq)

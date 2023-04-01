@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PerfWPF"
-        xmlns:views="clr-namespace:PerfWPF.Views"
+        xmlns:views="clr-namespace:PerfWPF.Views"        
         mc:Ignorable="d"
         Title="MainWindow" Height="180" Width="2560"
         AllowsTransparency="True"  WindowStyle="None" Topmost="True"
@@ -19,7 +19,7 @@
             <TextBox x:Name="CPUClockVal" HorizontalAlignment="Left" Margin="183,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Sensors.CPUClock, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#.##}}"/>
             <TextBox x:Name="GPUClockVal" HorizontalAlignment="Left" Margin="183,33,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
             <controls:CPUChart RenderTransformOrigin="0.499,0.517">
-                
+
             </controls:CPUChart>
         </Grid>
 
