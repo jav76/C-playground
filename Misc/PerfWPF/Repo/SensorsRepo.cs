@@ -14,7 +14,8 @@ namespace PerfWPF.Repo
         private Timer _updateTimer { get; }
         private UpdateTimerState _updateTimerState { get; }
        
-        private int _updateInterval { get; set; }
+        private const int UPDATE_INTERVAL_DEFAULT = 1000;
+        private int _updateInterval { get; set; } = UPDATE_INTERVAL_DEFAULT;
 
         private IDictionary<SensorType, IEnumerable<ISensor>> _mappedSensors { get; } = new Dictionary<SensorType, IEnumerable<ISensor>>();
 
@@ -34,7 +35,10 @@ namespace PerfWPF.Repo
                 if (!(_updateTimer is null))
                 {
                     _updateInterval = value;
-                    _updateTimer.Change(0, _updateInterval);
+                    if (!_updateTimer.Change(0, _updateInterval))
+                    {
+                        throw new FieldAccessException($"Failed to change timer '{nameof(_updateTimer)}' update interval");
+                    }
                 }
             }
         }
@@ -49,7 +53,7 @@ namespace PerfWPF.Repo
                 callback: new TimerCallback(UpdateTimerState.UpdateTimerCallback),
                 state: _updateTimerState,
                 dueTime: 0,
-                period: UpdateInterval
+                period: _updateInterval
             );
 
             _updateTimerState.IsPaused = false;
@@ -111,6 +115,64 @@ namespace PerfWPF.Repo
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Pause the update timer
+        /// </summary>
+        public void Pause()
+        {
+            _updateTimerState.IsPaused = true;
+        }
+
+        /// <summary>
+        /// Resume the update timer
+        /// </summary>
+        public void Resume()
+        {
+            _updateTimerState.IsPaused = false;
+        }
+
+        /// <summary>
+        /// Immediately run the task to update the SensorsRepo data
+        /// </summary>
+        public void Update()
+        {
+            // This will force a tick on the timer
+            UpdateInterval = UpdateInterval;
+        }
+
+        /// <summary>
+        /// Update the interval of the timer in milliseconds to the specified value
+        /// </summary>
+        /// <param name="interval"></param>
+        public void Update(int interval)
+        {
+            UpdateInterval = interval;
+        }
+        
+        /// <summary>
+        /// Clear all data in the SensorsRepo
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public void Clear(ISensorsRepoData data)
+        //{
+        //    if (typeof(data) is SomeSensorDataClass)
+        //    {
+        //        _sensorDataClass.Clear();
+        //    }
+        //    ...
+        //    etc
+        //    (Can also probably make this a switch)
+        //}
+
+        #endregion
+
         #region DEBUG
 #if DEBUG // Debugging helpers
 
@@ -128,7 +190,7 @@ namespace PerfWPF.Repo
         }
 
 #endif
-#endregion
+        #endregion
 
     }
 
