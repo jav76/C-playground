@@ -28,7 +28,7 @@ namespace PerfWPF.Repo
             _updateTimerState = new UpdateTimerState();
             _updateTimer = new Timer
             (
-                callback: new TimerCallback(UpdateTimerCallback),
+                callback: new TimerCallback(UpdateTimerState.UpdateTimerCallback),
                 state: _updateTimerState,
                 dueTime: 0,
                 period: UPDATE_INTERVAL
@@ -89,50 +89,6 @@ namespace PerfWPF.Repo
             }
 
             return cumulativeSensors;
-        }
-
-        #endregion
-
-        #region UpdateTimer
-    
-        private static void UpdateTimerCallback(object timerState)
-        {
-            if (timerState is UpdateTimerState)
-            {
-                UpdateTimerState state = (UpdateTimerState)timerState;
-                if (state.IsPaused)
-                {
-                    return;
-                }
-
-                lock(state)
-                {
-                    state.Counter++;
-                    state.lastExecutionTime = DateTime.Now;
-                    state.IsExecuting = true;
-                }
-                Stopwatch updateTimerWatch = new Stopwatch();
-                updateTimerWatch.Start();
-
-
-#if DEBUG
-                Debug.WriteLine($"Timer Callback - Counter: {state.Counter} LastExecutionTime: {state.lastExecutionTime} lastExecutionDurationMS: {state.lastExecutionDurationMS}");
-#endif
-
-                // Do update work here
-
-
-                updateTimerWatch.Stop();
-                lock(state)
-                {
-                    state.lastExecutionDurationMS = updateTimerWatch.ElapsedMilliseconds;
-                    state.IsExecuting = false;
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException($"Invalid timer state object - Expected '{nameof(UpdateTimerState)}'");
-            }
         }
 
         #endregion
