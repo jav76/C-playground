@@ -10,15 +10,33 @@ namespace PerfWPF.Repo
 {
     internal class SensorsRepo
     {
-        private const int UPDATE_INTERVAL = 1000;
         private Computer _computer { get; }
         private Timer _updateTimer { get; }
         private UpdateTimerState _updateTimerState { get; }
+       
+        private int _updateInterval { get; set; }
+
         private IDictionary<SensorType, IEnumerable<ISensor>> _mappedSensors { get; } = new Dictionary<SensorType, IEnumerable<ISensor>>();
 
         public IDictionary<SensorType, IEnumerable<ISensor>> MappedSensors
         {
             get { return _mappedSensors; }
+        }
+
+        public int UpdateInterval
+        {
+            get
+            {
+                return _updateInterval;
+            }
+            set
+            {
+                if (!(_updateTimer is null))
+                {
+                    _updateInterval = value;
+                    _updateTimer.Change(0, _updateInterval);
+                }
+            }
         }
 
         #region Init
@@ -31,7 +49,7 @@ namespace PerfWPF.Repo
                 callback: new TimerCallback(UpdateTimerState.UpdateTimerCallback),
                 state: _updateTimerState,
                 dueTime: 0,
-                period: UPDATE_INTERVAL
+                period: UpdateInterval
             );
 
             _updateTimerState.IsPaused = false;
