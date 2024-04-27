@@ -34,8 +34,8 @@ namespace PerfWPF.Repo
             {
                 _mappedSensors.TryAdd(type, totalSensors.Where(s => s.SensorType == type));
             }
-
-            PrintSensors();  
+              
+            PrintSensors();     
 
         }
 
